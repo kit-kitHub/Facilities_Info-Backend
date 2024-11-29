@@ -27,6 +27,12 @@ jobs:
           
       - name: gradlew에 실행 권한 부여
         run: chmod +x ./gradlew
-        
-      - name: 프로젝트 빌드
-        run: ./gradlew clean build -x test
+
+      - name: Cache Gradle packages 
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          
+      - name: Build with Gradle
+        run: ./gradlew build
