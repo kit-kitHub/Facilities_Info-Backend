@@ -9,11 +9,11 @@ START_LOG="$ROOT_PATH/start.log"
 
 NOW=$(date +%c)
 
-# 최신 버전 JAR 파일 찾기
-LATEST_JAR=$(ls -t $BUILD_PATH/*.jar | head -n 1)
+# -plain.jar 제외하고 최신 JAR 파일 찾기
+LATEST_JAR=$(ls -t $BUILD_PATH/*.jar | grep -v 'plain' | head -n 1)
 
 if [ -z "$LATEST_JAR" ]; then
-  echo "[$NOW] Error: No JAR file found in $BUILD_PATH" >> $START_LOG
+  echo "[$NOW] Error: No valid JAR file found in $BUILD_PATH" >> $START_LOG
   exit 1
 fi
 
