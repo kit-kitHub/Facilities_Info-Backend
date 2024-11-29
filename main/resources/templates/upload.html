@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload and View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .image-container {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Image Upload and View</h1>
+
+<div class="form-container">
+    <h2>Upload Image</h2>
+    <form id="imageForm">
+        <label for="name">Facility Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br><br>
+
+        <label for="image">Select Image:</label><br>
+        <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+        <button type="button" onclick="uploadImage()">Upload</button>
+    </form>
+
+    <!-- Error message display area -->
+    <div id="error-message" class="error-message" style="display: none;"></div>
+</div>
+
+<div class="image-container">
+    <h2>Uploaded Image</h2>
+    <div id="imageView"></div>
+</div>
+
+<script>
+    const API_BASE_URL = "http://localhost:8080";
+
+    // Upload image function
+    async function uploadImage() {
+        const form = document.getElementById("imageForm");
+        const formData = new FormData(form);
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.style.display = "none"; // Hide error message before each upload attempt
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/update/facility/info`, {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert("Image uploaded successfully!");
+                displayImage(data.imageUrl);
+            } else {
+                const errorText = await response.text();
+                showErrorMessage(errorText);  // Show error message if the upload fails
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            showErrorMessage("An error occurred while uploading the image.");
+        }
+    }
+
+    // Display image function
+    function displayImage(imageUrl) {
+        const imageView = document.getElementById("imageView");
+        imageView.innerHTML = `<img src="${API_BASE_URL}${imageUrl}" alt="Uploaded Image">`;
+    }
+
+    // Function to show error messages
+    function showErrorMessage(message) {
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.innerText = message;
+        errorMessage.style.display = "block";
+    }
+</script>
+</body>
+</html>
