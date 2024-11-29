@@ -1,7 +1,12 @@
-name: Spring Boot Ci/CD
+name: Spring Boot CI/CD
 run-name: Running
 on:
   push:
+    branches:
+      - main
+      - 'releases/**'
+      
+  pull_request:
     branches:
       - main
       - 'releases/**'
