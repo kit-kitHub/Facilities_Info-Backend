@@ -1,5 +1,4 @@
 name: Spring Boot CI/CD
-run-name: Running
 on:
   push:
     branches:
@@ -13,7 +12,7 @@ env:
   AWS_CODE_DEPLOY_GROUP: kitHub-CD-Group
 
 jobs:
-  build-with-gradle:
+  build-and-deploy:
     runs-on: ubuntu-22.04
     steps:
       - name: main 브랜치로 이동
