@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ROOT_PATH="/home/ubuntu/kitHub-Backend"
+BUILD_PATH="$ROOT_PATH/build/libs"
 JAR="$ROOT_PATH/application.jar"
 
 APP_LOG="$ROOT_PATH/application.log"
