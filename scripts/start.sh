@@ -9,8 +9,16 @@ START_LOG="$ROOT_PATH/start.log"
 
 NOW=$(date +%c)
 
-echo "[$NOW] $JAR 복사" >> $START_LOG
-cp $ROOT_PATH/build/libs/Facilities_Info-1.0.0.jar $JAR
+# 최신 버전 JAR 파일 찾기
+LATEST_JAR=$(ls -t $BUILD_PATH/*.jar | head -n 1)
+
+if [ -z "$LATEST_JAR" ]; then
+  echo "[$NOW] Error: No JAR file found in $BUILD_PATH" >> $START_LOG
+  exit 1
+fi
+
+echo "[$NOW] $LATEST_JAR 복사" >> $START_LOG
+cp "$LATEST_JAR" "$JAR"
 
 echo "[$NOW] > $JAR 실행" >> $START_LOG
 nohup java -jar $JAR > $APP_LOG 2> $ERROR_LOG &
