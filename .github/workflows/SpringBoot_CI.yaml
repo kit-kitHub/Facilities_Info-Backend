@@ -5,6 +5,12 @@ on:
     branches:
       - development
       - 'releases/**'
+      
+  pull_request:
+    branches:
+      - development
+      - 'releases/**'
+      
 
 jobs:
   build-with-gradle:
