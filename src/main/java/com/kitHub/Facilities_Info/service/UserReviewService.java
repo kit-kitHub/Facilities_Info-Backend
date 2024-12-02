@@ -1,7 +1,7 @@
-package com.kitHub.Facilities_Info.service;
+package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_Info.domain.UserReview;
-import com.kitHub.Facilities_Info.repository.UserReviewRepository;
+import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.repository.UserReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

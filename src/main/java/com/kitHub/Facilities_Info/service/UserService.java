@@ -1,11 +1,12 @@
-package com.kitHub.Facilities_Info.service;
+package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_Info.domain.User;
+import com.kitHub.Facilities_info.domain.User;
 
-import com.kitHub.Facilities_Info.domain.UserReview;
-import com.kitHub.Facilities_Info.dto.auth.AddLocalUserRequest;
-import com.kitHub.Facilities_Info.dto.auth.AddOauthUserRequest;
-import com.kitHub.Facilities_Info.repository.UserRepository;
+import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.dto.auth.AddLocalUserRequest;
+import com.kitHub.Facilities_info.dto.auth.AddOauthUserRequest;
+import com.kitHub.Facilities_info.repository.UserRepository;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private AuthenticationProvider authenticationProvider;
     public Long saveLocal(AddLocalUserRequest dto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -54,11 +56,6 @@ public class UserService {
                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 
-    public User findByNickname(String nickname) {
-        return userRepository.findByNickname(nickname)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
-    }
-
     public User findBySnsId(String snsId) {
         return userRepository.findBySnsId(snsId)
                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
@@ -79,8 +76,15 @@ public class UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    public boolean checkNicknameExists(String nickname)  {
+    public User getUserInfoIfMatchesAuthor(Long AuthorUserId){
+         User LoginUser = authenticationProvider.getUserInfoFromSecurityContextHolder();
+         return LoginUser.getId().equals(AuthorUserId)? LoginUser : null;
+    }
+
+
+    public boolean checkNicknameExists(String nickname) {
         return userRepository.findByNickname(nickname).isPresent();
     }
 
 }
+

@@ -1,13 +1,13 @@
-package com.kitHub.Facilities_Info.controller;
+package com.kitHub.Facilities_info.controller;
 
-import com.kitHub.Facilities_Info.domain.UserReview;
-import com.kitHub.Facilities_Info.dto.UpdateReviewRequest;
-import com.kitHub.Facilities_Info.repository.FacilityRepository;
-import com.kitHub.Facilities_Info.repository.UserRepository;
-import com.kitHub.Facilities_Info.repository.UserReviewRepository;
-import com.kitHub.Facilities_Info.service.ReviewService;
-import com.kitHub.Facilities_Info.dto.AddReviewRequest;
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.dto.UpdateReviewRequest;
+import com.kitHub.Facilities_info.repository.FacilityRepository;
+import com.kitHub.Facilities_info.repository.UserRepository;
+import com.kitHub.Facilities_info.repository.UserReviewRepository;
+import com.kitHub.Facilities_info.service.ReviewService;
+import com.kitHub.Facilities_info.dto.AddReviewRequest;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

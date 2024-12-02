@@ -1,12 +1,12 @@
-package com.kitHub.Facilities_Info.service;
+package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_Info.domain.Facility;
-import com.kitHub.Facilities_Info.domain.User;
-import com.kitHub.Facilities_Info.domain.UserReview;
-import com.kitHub.Facilities_Info.dto.AddReviewRequest;
-import com.kitHub.Facilities_Info.dto.UpdateReviewRequest;
-import com.kitHub.Facilities_Info.repository.UserReviewRepository;
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.domain.facility.Facility;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.dto.AddReviewRequest;
+import com.kitHub.Facilities_info.dto.UpdateReviewRequest;
+import com.kitHub.Facilities_info.repository.UserReviewRepository;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

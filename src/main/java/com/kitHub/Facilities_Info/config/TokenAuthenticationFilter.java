@@ -1,10 +1,10 @@
-package com.kitHub.Facilities_Info.config;
+package com.kitHub.Facilities_info.config;
 
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 
-import com.kitHub.Facilities_Info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
-import com.kitHub.Facilities_Info.util.Authentication.tokenAuthentication.TokenValidationResult;
-import com.kitHub.Facilities_Info.util.jwt.JwtProvider;
+import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
+import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenValidationResult;
+import com.kitHub.Facilities_info.util.jwt.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,11 +62,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         switch (tokenValidationResult) {
             case MISSING:
-//                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Token is missing\"}");
-//                break;
+                //response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Token is missing\"}");
+                //break;
             case INVALID:
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Invalid token\"}");
-                break;
+                //response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Invalid token\"}");
+                //break;
             case MALFORMED:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Malformed token\"}");
                 break;

@@ -1,11 +1,11 @@
-package com.kitHub.Facilities_Info.service;
+package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_Info.domain.User;
-import com.kitHub.Facilities_Info.dto.auth.LocalLoginRequest;
-import com.kitHub.Facilities_Info.dto.auth.OAuthLoginRequest;
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
-import com.kitHub.Facilities_Info.util.Authentication.loginAuthentication.LoginAuthenticationManager;
-import com.kitHub.Facilities_Info.util.Authentication.loginAuthentication.AuthenticationResult;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.dto.auth.LocalLoginRequest;
+import com.kitHub.Facilities_info.dto.auth.OAuthLoginRequest;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.util.Authentication.loginAuthentication.LoginAuthenticationManager;
+import com.kitHub.Facilities_info.util.Authentication.loginAuthentication.AuthenticationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

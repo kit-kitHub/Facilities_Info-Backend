@@ -1,7 +1,7 @@
-package com.kitHub.Facilities_Info.service;
+package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_Info.domain.GeoCoordinates;
-import com.kitHub.Facilities_Info.repository.GeoCoordinatesRepository;
+import com.kitHub.Facilities_info.domain.facility.GeoCoordinates;
+import com.kitHub.Facilities_info.repository.GeoCoordinatesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

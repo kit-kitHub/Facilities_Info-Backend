@@ -1,23 +1,19 @@
-package com.kitHub.Facilities_Info.controller;
+package com.kitHub.Facilities_info.controller;
 
-import com.kitHub.Facilities_Info.domain.Facility;
+import com.kitHub.Facilities_info.domain.facility.Facility;
 
-import com.kitHub.Facilities_Info.domain.FacilityType;
-import com.kitHub.Facilities_Info.dto.UpdateFacilityInfo;
-import com.kitHub.Facilities_Info.service.FacilityService;
+import com.kitHub.Facilities_info.domain.facility.FacilityType;
+import com.kitHub.Facilities_info.dto.UpdateFacilityInfo;
+import com.kitHub.Facilities_info.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -49,34 +45,6 @@ public class FacilityController {
         } catch (Exception e) {
             e.printStackTrace();  // 예외 스택 트레이스 출력
             return ResponseEntity.status(500).body("An unexpected error occurred");
-        }
-    }
-
-    @GetMapping("/facility/info/by-coordinates")
-    public ResponseEntity<MultiValueMap<String, Object>> getFacilityByCoordinates(@RequestParam double latitude, @RequestParam double longitude) {
-        try {
-            // 위도와 경도를 통해 Facility 찾기
-            Facility facility = facilityService.getFacilityByCoordinates(latitude, longitude);
-
-            if (facility != null) {
-                // Facility 객체 정보와 이미지를 반환할 MultiValueMap 생성
-                MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-
-                // Facility 정보 (JSON 형식)
-                body.add("facility", facility);
-
-                // 이미지 경로
-                String imageUrl = facility.getImageUrl();  // "facility_20241120_123456.jpg"와 같은 형식
-
-                // 클라이언트에서 접근할 수 있는 이미지 URL을 반환
-                body.add("imageUrl", imageUrl);
-
-                return ResponseEntity.ok().body(body);  // Facility 정보와 이미지 URL을 응답으로 반환
-            } else {
-                return ResponseEntity.notFound().build();  // Facility 정보가 없으면 404 반환
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(null);  // 예외 발생 시 500 오류 반환
         }
     }
 

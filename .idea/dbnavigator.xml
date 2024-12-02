@@ -36,7 +36,27 @@ CREATE TABLE refresh_tokens (
     refresh_token VARCHAR(512) NOT NULL
 );
 
-SHOW TABLES]]></console>
+SHOW TABLES
+
+SELECT * FROM faqs;
+
+SELECT * FROM notices;
+
+-- faqs 테이블에서 ID가 4번부터 7번까지 삭제
+DELETE FROM faqs
+WHERE id BETWEEN 4 AND 7;
+
+-- notices 테이블에서 ID가 4번부터 11번까지 삭제
+DELETE FROM notices
+WHERE id BETWEEN 4 AND 11;
+
+DELETE FROM images
+WHERE notice_id BETWEEN 4 AND 11;
+
+
+RESET QUERY CACHE;
+
+FLUSH TABLES;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

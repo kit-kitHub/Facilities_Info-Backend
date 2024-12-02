@@ -1,8 +1,8 @@
-package com.kitHub.Facilities_Info.domain;
+package com.kitHub.Facilities_info.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kitHub.Facilities_info.domain.facility.Facility;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class UserReview {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private User user;
 
     @Column(nullable = false, length = 1000)

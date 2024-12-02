@@ -1,11 +1,11 @@
-package com.kitHub.Facilities_Info.util.Authentication.tokenAuthentication;
+package com.kitHub.Facilities_info.util.Authentication.tokenAuthentication;
 
-import com.kitHub.Facilities_Info.domain.RefreshToken;
-import com.kitHub.Facilities_Info.repository.RefreshTokenRepository;
+import com.kitHub.Facilities_info.domain.RefreshToken;
+import com.kitHub.Facilities_info.repository.RefreshTokenRepository;
 
-import com.kitHub.Facilities_Info.repository.UserRepository;
-import com.kitHub.Facilities_Info.util.jwt.JwtProperties;
-import com.kitHub.Facilities_Info.util.jwt.JwtProvider;
+import com.kitHub.Facilities_info.repository.UserRepository;
+import com.kitHub.Facilities_info.util.jwt.JwtProperties;
+import com.kitHub.Facilities_info.util.jwt.JwtProvider;
 
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;

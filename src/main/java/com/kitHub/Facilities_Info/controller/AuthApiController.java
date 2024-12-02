@@ -1,20 +1,20 @@
-package com.kitHub.Facilities_Info.controller;
+package com.kitHub.Facilities_info.controller;
 
 
-import com.kitHub.Facilities_Info.domain.User;
-import com.kitHub.Facilities_Info.dto.auth.AddLocalUserRequest;
-import com.kitHub.Facilities_Info.dto.auth.AddOauthUserRequest;
-import com.kitHub.Facilities_Info.dto.auth.LocalLoginRequest;
-import com.kitHub.Facilities_Info.dto.auth.OAuthLoginRequest;
-import com.kitHub.Facilities_Info.repository.RefreshTokenRepository;
-import com.kitHub.Facilities_Info.service.LoginService;
-import com.kitHub.Facilities_Info.service.ReviewService;
-import com.kitHub.Facilities_Info.service.UserService;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.dto.auth.AddLocalUserRequest;
+import com.kitHub.Facilities_info.dto.auth.AddOauthUserRequest;
+import com.kitHub.Facilities_info.dto.auth.LocalLoginRequest;
+import com.kitHub.Facilities_info.dto.auth.OAuthLoginRequest;
+import com.kitHub.Facilities_info.repository.RefreshTokenRepository;
+import com.kitHub.Facilities_info.service.LoginService;
+import com.kitHub.Facilities_info.service.ReviewService;
+import com.kitHub.Facilities_info.service.UserService;
 
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
-import com.kitHub.Facilities_Info.util.Authentication.loginAuthentication.AuthenticationResult;
-import com.kitHub.Facilities_Info.util.jwt.JwtProvider;
-import com.kitHub.Facilities_Info.util.login.LoginSuccessHandler;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.util.Authentication.loginAuthentication.AuthenticationResult;
+import com.kitHub.Facilities_info.util.jwt.JwtProvider;
+import com.kitHub.Facilities_info.util.login.LoginSuccessHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,16 +55,15 @@ public class AuthApiController {
         }
     }
 
-    @GetMapping("/checknickname/{nickname}")
+
+    @GetMapping("/checkNickname/{nickname}")
     public ResponseEntity<String> checkNickname(@PathVariable String nickname) {
         boolean exists = userService.checkNicknameExists(nickname);
         if (exists) {
-            return ResponseEntity.status(409).body("이미 사용 중인 nickname 입니다.");
+            return ResponseEntity.status(409).body("이미 사용 중인 닉네임입니다.");
         } else {
-            return ResponseEntity.ok("사용 가능한 이메일입니다.");
+            return ResponseEntity.ok("사용 가능한 닉네임입니다.");
         }
-
-
     }
 
     @PostMapping("/signup/local")
@@ -107,10 +106,8 @@ public class AuthApiController {
                 tokens = loginSuccessHandler.makeTokensOnAuthenticationSuccess();
                 String accessToken = tokens.get("accessToken");
                 String refreshToken = tokens.get("refreshToken");
-
                 headers.add("AccessToken", accessToken);
                 headers.add("RefreshToken", refreshToken);
-
                 // 디버그 로그 추가
                 System.out.println("Access Token: " + accessToken);
                 System.out.println("Refresh Token: " + refreshToken);

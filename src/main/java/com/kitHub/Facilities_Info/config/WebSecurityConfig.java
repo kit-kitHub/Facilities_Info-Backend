@@ -1,27 +1,20 @@
-package com.kitHub.Facilities_Info.config;
+package com.kitHub.Facilities_info.config;
 
-import com.kitHub.Facilities_Info.repository.RefreshTokenRepository;
-import com.kitHub.Facilities_Info.service.UserService;
-import com.kitHub.Facilities_Info.util.jwt.JwtProvider;
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
-import com.kitHub.Facilities_Info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
+import com.kitHub.Facilities_info.util.jwt.JwtProvider;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @RequiredArgsConstructor
 @Configuration
@@ -66,9 +59,10 @@ public class WebSecurityConfig {
         http.headers()
                 .frameOptions().disable(); // H2 콘솔 사용을 위해 프레임 옵션 비활성화
 
-        http.exceptionHandling()
-                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                        new AntPathRequestMatcher("/api/**"));
+//        http.exceptionHandling()
+//                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
+//                        new AntPathRequestMatcher("/api/**"));
+
 
         return http.build();
     }
