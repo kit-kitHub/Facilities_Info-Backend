@@ -8,15 +8,16 @@ import com.kitHub.Facilities_info.dto.auth.AddOauthUserRequest;
 import com.kitHub.Facilities_info.repository.UserRepository;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
+    @Autowired
     private final UserRepository userRepository;
-
+    @Autowired
     private AuthenticationProvider authenticationProvider;
     public Long saveLocal(AddLocalUserRequest dto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

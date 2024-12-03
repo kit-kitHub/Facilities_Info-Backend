@@ -1,21 +1,17 @@
 package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_info.domain.Report.Report;
 import com.kitHub.Facilities_info.domain.Report.Block;
+import com.kitHub.Facilities_info.domain.Report.Report;
 import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.domain.UserReview;
 import com.kitHub.Facilities_info.domain.community.Comment;
 import com.kitHub.Facilities_info.domain.community.Post;
-import com.kitHub.Facilities_info.domain.UserReview;
-
 import com.kitHub.Facilities_info.dto.CreateBlockRequest;
 import com.kitHub.Facilities_info.dto.CreateReportRequest;
-import com.kitHub.Facilities_info.repository.ReportRepository;
 import com.kitHub.Facilities_info.repository.BlockRepository;
-
-import com.kitHub.Facilities_info.repository.UserReviewRepository;
+import com.kitHub.Facilities_info.repository.ReportRepository;
 import com.kitHub.Facilities_info.repository.UserRepository;
-
-
+import com.kitHub.Facilities_info.repository.UserReviewRepository;
 import com.kitHub.Facilities_info.repository.community.CommentRepository;
 import com.kitHub.Facilities_info.repository.community.PostRepository;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
@@ -103,13 +99,16 @@ public class ReportService {
     private User getReportedUser(String contentType, Long contentId) {
         switch (contentType) {
             case "comment":
-                Comment comment = commentRepository.findById(contentId).orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
+                Comment comment = commentRepository.findById(contentId)
+                        .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
                 return comment.getUser();
             case "post":
-                Post post = postRepository.findById(contentId).orElseThrow(() -> new IllegalArgumentException("해당 게시물을 찾을 수 없습니다."));
+                Post post = postRepository.findById(contentId)
+                        .orElseThrow(() -> new IllegalArgumentException("해당 게시물을 찾을 수 없습니다."));
                 return post.getUser();
             case "review":
-                UserReview review = userReviewRepository.findById(contentId).orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다."));
+                UserReview review = userReviewRepository.findById(contentId)
+                        .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다."));
                 return review.getUser();
             default:
                 throw new IllegalArgumentException("잘못된 콘텐츠 유형입니다.");

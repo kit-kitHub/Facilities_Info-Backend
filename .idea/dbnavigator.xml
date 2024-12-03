@@ -42,6 +42,11 @@ SELECT * FROM faqs;
 
 SELECT * FROM notices;
 
+SELECT * FROM posts
+
+SELECT * FROM comments
+
+
 -- faqs 테이블에서 ID가 4번부터 7번까지 삭제
 DELETE FROM faqs
 WHERE id BETWEEN 4 AND 7;

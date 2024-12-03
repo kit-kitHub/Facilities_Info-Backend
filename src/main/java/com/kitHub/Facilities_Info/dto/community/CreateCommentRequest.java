@@ -1,4 +1,4 @@
-package com.kitHub.Facilities_info.dto;
+package com.kitHub.Facilities_info.dto.community;
 
 import lombok.*;
 
