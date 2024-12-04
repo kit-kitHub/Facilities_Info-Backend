@@ -1,5 +1,6 @@
 package com.kitHub.Facilities_info.domain.Report;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kitHub.Facilities_info.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,9 +23,11 @@ public class Block {
 
     @OneToOne
     @JoinColumn(name = "blocked_user_id", nullable = false)
+    @JsonManagedReference
     private User blockedUser;
 
     @OneToMany(mappedBy = "block")
+    @JsonManagedReference
     private Set<Report> reports;
 
     @Column(nullable = false)

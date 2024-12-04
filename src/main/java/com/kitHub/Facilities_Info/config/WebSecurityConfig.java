@@ -53,6 +53,8 @@ public class WebSecurityConfig {
 
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+
+
         http.authorizeRequests()
                 .anyRequest().permitAll();
 

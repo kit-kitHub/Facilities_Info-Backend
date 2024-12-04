@@ -61,6 +61,11 @@ public class AdminService {
     public Block blockUser(Long userId) {
         User userToBlock = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+
+        if (userToBlock.isBlocked()) {
+            throw new IllegalStateException("이미 블록된 상태입니다.");
+        }
+
         userToBlock.setBlocked(true);
 
         Set<Report> reports = new HashSet<>(reportRepository.findByReportedUserId(userId));

@@ -1,4 +1,4 @@
-package com.kitHub.Facilities_info.controller;
+package com.kitHub.Facilities_info.controller.article;
 
 import com.kitHub.Facilities_info.domain.article.FAQ;
 import com.kitHub.Facilities_info.domain.article.Notice;

@@ -1,4 +1,4 @@
-package com.kitHub.Facilities_info.controller;
+package com.kitHub.Facilities_info.controller.facility;
 
 import com.kitHub.Facilities_info.domain.facility.Facility;
 
@@ -31,7 +31,7 @@ public class FacilityController {
         return facilityService.getFacilityNamesByNameContaining(name);
     }
 
-    @PutMapping("update/facility/info")
+    @PutMapping("update/facility/info/{facilityId}")
     public ResponseEntity<?> updateFacility(@PathVariable Long facilityId, @ModelAttribute UpdateFacilityInfo updateFacilityInfo) {
         try {
             Facility savedFacility = facilityService.updateFacilityDetails(facilityId, updateFacilityInfo);
@@ -48,11 +48,12 @@ public class FacilityController {
         }
     }
 
+
     @GetMapping("/facility/image/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
         try {
             // 서버에 실제로 저장된 경로를 얻기 위한 절대 경로
-            String uploadDirectory = Paths.get("src/main/resources/static/images/").toAbsolutePath().toString();
+            String uploadDirectory = Paths.get("src/main/resources/static/images/facilities/").toAbsolutePath().toString();
             System.out.println("파일 업로드 경로: " + uploadDirectory);
 
             String imagePath = uploadDirectory + "/" + imageName;

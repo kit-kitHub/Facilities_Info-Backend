@@ -8,6 +8,4 @@ import lombok.Setter;
 public class CreateReportRequest {
     private String reason;
     private String type;
-    private Long reportedContentId;  // 추가
-    private String reportedContentType;  // 추가
 }

@@ -6,7 +6,6 @@ import com.kitHub.Facilities_info.domain.User;
 import com.kitHub.Facilities_info.domain.UserReview;
 import com.kitHub.Facilities_info.domain.community.Comment;
 import com.kitHub.Facilities_info.domain.community.Post;
-import com.kitHub.Facilities_info.dto.CreateBlockRequest;
 import com.kitHub.Facilities_info.dto.CreateReportRequest;
 import com.kitHub.Facilities_info.repository.BlockRepository;
 import com.kitHub.Facilities_info.repository.ReportRepository;
@@ -48,14 +47,20 @@ public class ReportService {
 
     @Transactional
     public Report createReport(String contentType, Long contentId, CreateReportRequest request) {
+        System.out.println("Creating report for contentType: " + contentType + ", contentId: " + contentId);
+
         User reporter = authenticationProvider.getUserInfoFromSecurityContextHolder();
         if (reporter == null) {
+            System.out.println("Reporter not found.");
             throw new IllegalArgumentException("로그인이 필요합니다.");
         }
+        System.out.println("Reporter: " + reporter.getEmail());
 
         User reportedUser = getReportedUser(contentType, contentId);
+        System.out.println("Reported User: " + reportedUser.getEmail());
 
         if (reportRepository.findByReporterIdAndReportedContentId(reporter.getId(), contentId).size() > 0) {
+            System.out.println("Content already reported.");
             throw new IllegalArgumentException("이미 신고한 콘텐츠입니다.");
         }
 
@@ -79,9 +84,11 @@ public class ReportService {
         userRepository.save(reportedUser);
 
         reportRepository.save(report);
+        System.out.println("Report saved with ID: " + report.getId());
 
         // 신고 6번 누적 시 자동 차단
         if (reportedUser.getReportsReceived().size() >= 6) {
+            System.out.println("User has been reported 6 times. Blocking user.");
             Block block = Block.builder()
                     .blockedUser(reportedUser)
                     .blockDate(LocalDateTime.now())
@@ -116,10 +123,12 @@ public class ReportService {
     }
 
     public List<Report> getReportsByUser(Long userId) {
+        System.out.println("Fetching reports for user ID: " + userId);
         return reportRepository.findByReportedUserId(userId);
     }
 
     public List<Report> getAllReports() {
+        System.out.println("Fetching all reports.");
         return reportRepository.findAll();
     }
 }

@@ -45,13 +45,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 authenticationProvider.setAuthenticationtoSecurityContextHolder(authentication);
             } else {
                 handleTokenValidationFailure(tokenValidationResult, response);
+                System.out.println(tokenValidationResult);
                 return;
             }
         }
-//        else {
+        else {
+            System.out.println("token MISSING");
+
 //            handleTokenValidationFailure(TokenValidationResult.MISSING, response);
 //            return;
-//        }
+        }
 
         filterChain.doFilter(request, response);
     }

@@ -72,19 +72,21 @@ public class UserService {
         user.updateUserReview(userReview);
         return userRepository.save(user);
     }
-
-    public boolean checkEmailExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
-    }
-
     public User getUserInfoIfMatchesAuthor(Long AuthorUserId){
          User LoginUser = authenticationProvider.getUserInfoFromSecurityContextHolder();
          return LoginUser.getId().equals(AuthorUserId)? LoginUser : null;
     }
 
+    public boolean checkEmailExists(String email) {
+        boolean exists = userRepository.findByEmail(email).isPresent();
+        System.out.println("Email check for '" + email + "': " + exists);
+        return exists;
+    }
 
     public boolean checkNicknameExists(String nickname) {
-        return userRepository.findByNickname(nickname).isPresent();
+        boolean exists = userRepository.findByNickname(nickname).isPresent();
+        System.out.println("Nickname check for '" + nickname + "': " + exists);
+        return exists;
     }
 
 }

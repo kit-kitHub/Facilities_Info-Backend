@@ -1,5 +1,6 @@
 package com.kitHub.Facilities_info.domain.image;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kitHub.Facilities_info.domain.facility.Facility;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -23,6 +24,7 @@ public class FacilityImage {
 
     @ManyToOne
     @JoinColumn(name = "facility_id")
+    @JsonBackReference
     private Facility facility;
 
     @Builder

@@ -85,15 +85,18 @@ public class Facility {
         this.address = (address != null && !address.isEmpty()) ? address : this.address;
         this.description = (description != null && !description.isEmpty()) ? description : this.description;
         if (facilityImages != null && !facilityImages.isEmpty()) {
-            this.facilityImages.addAll(facilityImages);
+            this.facilityImages.clear(); // 기존 이미지 제거
+            this.facilityImages.addAll(facilityImages); // 새로운 이미지 추가
         }
         return this;
     }
 
-    public void addFacilityImages(FacilityImage facilityImage) {
-        this.facilityImages.add(facilityImage);
-        facilityImage.setFacility(this);
+    public void replaceFacilityImages(Set<FacilityImage> facilityImages) {
+        this.facilityImages.clear(); // 기존 이미지 제거
+        this.facilityImages.addAll(facilityImages); // 새로운 이미지 추가
+        facilityImages.forEach(image -> image.setFacility(this));
     }
+
 
     public void removeFacilityImage(FacilityImage facilityImage) {
         this.facilityImages.remove(facilityImage);

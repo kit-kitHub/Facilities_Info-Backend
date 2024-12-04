@@ -58,12 +58,15 @@ public class User implements UserDetails {
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Report> reportsMade;  // 추가: 내가 신고한 기록
+    @JsonBackReference(value = "reporter")
+    private Set<Report> reportsMade;  // 내가 신고한 기록
 
     @OneToMany(mappedBy = "reportedUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Report> reportsReceived;  // 추가: 나에 대한 신고 기록
+    @JsonBackReference(value = "reportedUser")
+    private Set<Report> reportsReceived;  // 나에 대한 신고 기록
 
     @OneToOne(mappedBy = "blockedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Block block;  // 추가: 차단 기록
 
     @Override
@@ -150,4 +153,3 @@ public class User implements UserDetails {
         return !isBlocked;  // 수정: 차단 여부 반영
     }
 }
-

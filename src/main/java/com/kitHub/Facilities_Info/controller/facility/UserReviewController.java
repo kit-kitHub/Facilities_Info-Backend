@@ -1,4 +1,4 @@
-package com.kitHub.Facilities_info.controller;
+package com.kitHub.Facilities_info.controller.facility;
 
 import com.kitHub.Facilities_info.domain.UserReview;
 import com.kitHub.Facilities_info.dto.UpdateReviewRequest;
