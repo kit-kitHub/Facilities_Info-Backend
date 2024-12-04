@@ -1,4 +1,4 @@
-package com.kitHub.Facilities_Info.domain;
+package com.kitHub.Facilities_info.domain.facility;
 
 public enum FacilityType {
     PARKING_LOT, // 주차장

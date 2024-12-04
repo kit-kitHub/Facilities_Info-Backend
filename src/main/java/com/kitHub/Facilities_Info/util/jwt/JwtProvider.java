@@ -1,21 +1,16 @@
-package com.kitHub.Facilities_Info.util.jwt;
+package com.kitHub.Facilities_info.util.jwt;
 
-import com.kitHub.Facilities_Info.domain.User;
-import com.kitHub.Facilities_Info.repository.UserRepository;
-import com.kitHub.Facilities_Info.service.UserService;
-import com.kitHub.Facilities_Info.util.Authentication.AuthenticationProvider;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.repository.UserRepository;
+import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Component

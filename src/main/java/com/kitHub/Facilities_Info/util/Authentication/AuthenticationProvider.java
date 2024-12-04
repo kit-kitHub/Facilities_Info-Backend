@@ -1,7 +1,7 @@
-package com.kitHub.Facilities_Info.util.Authentication;
+package com.kitHub.Facilities_info.util.Authentication;
 
-import com.kitHub.Facilities_Info.domain.User;
-import com.kitHub.Facilities_Info.repository.UserRepository;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -119,6 +119,7 @@ public class AuthenticationProvider {
                 user.getProvider()
         );
     }
+
 
     public User getUserInfoFromSecurityContextHolder(){
         Authentication authentication = getAuthenticationFromSecurityContextHolder();

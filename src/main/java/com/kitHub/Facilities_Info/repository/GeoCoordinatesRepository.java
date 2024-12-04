@@ -1,13 +1,13 @@
-package com.kitHub.Facilities_Info.repository;
+package com.kitHub.Facilities_info.repository;
 
-import com.kitHub.Facilities_Info.domain.GeoCoordinates;
+import com.kitHub.Facilities_info.domain.facility.GeoCoordinates;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-
+@Repository
 public interface GeoCoordinatesRepository extends JpaRepository<GeoCoordinates, Long> {
 
     @Query("SELECT g FROM GeoCoordinates g JOIN FETCH g.facility WHERE " +

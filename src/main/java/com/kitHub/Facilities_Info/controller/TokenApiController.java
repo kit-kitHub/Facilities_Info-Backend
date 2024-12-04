@@ -1,7 +1,7 @@
-//package com.kitHub.Facilities_Info.controller;
+//package com.example.demo.controller;
 //
-//import com.kitHub.Facilities_Info.dto.CreateAccessTokenRequest;
-//import com.kitHub.Facilities_Info.dto.CreateAccessTokenResponse;
+//import com.example.demo.dto.CreateAccessTokenRequest;
+//import com.example.demo.dto.CreateAccessTokenResponse;
 //import lombok.RequiredArgsConstructor;
 //
 //import org.springframework.http.HttpStatus;

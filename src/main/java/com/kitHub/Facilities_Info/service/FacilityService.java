@@ -1,38 +1,49 @@
-package com.kitHub.Facilities_Info.service;
+package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_Info.domain.*;
-import com.kitHub.Facilities_Info.dto.UpdateFacilityInfo;
-import com.kitHub.Facilities_Info.repository.FacilityRepository;
-import com.kitHub.Facilities_Info.repository.GeoCoordinatesRepository;
-import jakarta.transaction.Transactional;
+import com.kitHub.Facilities_info.domain.facility.Facility;
+import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.domain.facility.FacilityType;
+import com.kitHub.Facilities_info.domain.facility.GeoCoordinates;
+import com.kitHub.Facilities_info.domain.image.FacilityImage;
+
+import com.kitHub.Facilities_info.repository.FacilityRepository;
+import com.kitHub.Facilities_info.repository.GeoCoordinatesRepository;
+import com.kitHub.Facilities_info.repository.FacilityImageRepository;
+
+import com.kitHub.Facilities_info.dto.UpdateFacilityInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class FacilityService {
+
     @Autowired
-    FacilityRepository facilityRepository;
+    private FacilityRepository facilityRepository;
+
     @Autowired
-    GeoCoordinatesRepository geoCoordinatesRepository;
+    private GeoCoordinatesRepository geoCoordinatesRepository;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private FacilityImageRepository facilityImageRepository;
 
     public Facility findById(Long facilityId) {
         return facilityRepository.findById(facilityId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected facility"));
     }
 
-    public Facility updateUserReview (Facility facility, UserReview userReview) {
-
+    public Facility updateUserReview(Facility facility, UserReview userReview) {
         facility.updateUserReview(userReview);
         return facilityRepository.save(facility);
     }
@@ -44,27 +55,36 @@ public class FacilityService {
                 .collect(Collectors.toList());
     }
 
-
     @Transactional
     public Facility updateFacilityDetails(Long facilityId, UpdateFacilityInfo updateFacilityInfo) throws IOException {
         try {
-            // 이미지 파일 저장 및 경로 얻기
-            String imageFileName = saveImageFile(updateFacilityInfo.getImage(), updateFacilityInfo.getName());
+            // 이미지 파일이 있을 때만 저장 및 경로 얻기
+            List<String> imageFileNames = new ArrayList<>();
+            if (updateFacilityInfo.getImages() != null && !updateFacilityInfo.getImages().isEmpty()) {
+                imageFileNames = imageService.saveFacilityImageFiles(updateFacilityInfo.getImages(), "facilities");
+            }
 
             // Facility 찾기 및 업데이트
-            Optional<Facility> foundFacility = facilityRepository.findById(facilityId);
-            if (foundFacility.isPresent()) {
-                Facility facility = foundFacility.get();
+            Facility facility = facilityRepository.findById(facilityId)
+                    .orElseThrow(() -> new IllegalArgumentException("Facility not found with id " + facilityId));
 
-                facility.setName(updateFacilityInfo.getName());
-                facility.setAddress(updateFacilityInfo.getAddress());
-                facility.setDescription(updateFacilityInfo.getDescription());
-                facility.setImageUrl("/images/" + imageFileName); // 이미지 URL 설정
+            Set<FacilityImage> facilityImages = imageFileNames.stream()
+                    .map(imageFileName -> FacilityImage.builder()
+                            .url(imageFileName)
+                            .facility(facility)
+                            .build())
+                    .collect(Collectors.toSet());
 
-                return facilityRepository.save(facility);
-            } else {
-                throw new IllegalArgumentException("Facility not found with id " + facilityId);
-            }
+            Facility updatedFacility = facility.updateFacility(
+                    updateFacilityInfo.getName(),
+                    updateFacilityInfo.getAddress(),
+                    updateFacilityInfo.getDescription(),
+                    facilityImages
+            );
+
+            facilityImageRepository.saveAll(facilityImages);
+            return facilityRepository.save(updatedFacility);
+
         } catch (IllegalArgumentException e) {
             // 예외 발생 시 메시지 출력
             System.out.println("Invalid input: " + e.getMessage());
@@ -78,41 +98,6 @@ public class FacilityService {
             System.out.println("Unexpected error occurred: " + e.getMessage());
             throw new RuntimeException("An unexpected error occurred", e);
         }
-    }
-
-    private String saveImageFile(MultipartFile imageFile, String facilityName) throws IOException {
-        if (imageFile == null || imageFile.isEmpty()) {
-            throw new IllegalArgumentException("Uploaded image file is empty or null");
-        }
-
-        String originalFileName = imageFile.getOriginalFilename();
-        if (originalFileName == null || originalFileName.isEmpty()) {
-            throw new IllegalArgumentException("Original file name is empty");
-        }
-
-        // 파일 이름 충돌 방지 (시설 이름 + 현재 시간 + 이미지 이름) 으로 파일 이름 설정
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = facilityName + "_" + timestamp + "_" + originalFileName;
-
-        // 파일 업로드 될 경로 지정
-        String uploadDirectory = Paths.get("src/main/resources/static/images/").toAbsolutePath().toString();
-        System.out.println("파일 업로드 경로: " + uploadDirectory);
-
-        File directory = new File(uploadDirectory);
-        if (!directory.exists()) {
-            directory.mkdirs();  // 디렉토리가 없으면 생성
-        }
-
-        // 이미지 파일을 저장할 경로
-        String imagePath = uploadDirectory + File.separator + imageFileName;  // 절대 경로
-
-        // 현재 파일 경로 출력
-        System.out.println("파일 절대 경로: " + imagePath);
-
-        // 이미지 파일을 저장
-        imageFile.transferTo(new File(imagePath));
-
-        return imageFileName;
     }
 
     public Facility getFacilityByCoordinates(double latitude, double longitude) {
@@ -130,18 +115,20 @@ public class FacilityService {
     public List<Facility> findByNameContaining(String name) {
         return facilityRepository.findByNameContaining(name);
     }
+
     public List<Facility> findByType(FacilityType type) {
         return facilityRepository.findByType(type);
     }
+
     public List<Facility> findByNameContainingAndType(String name, FacilityType type) {
         return facilityRepository.findByNameContainingAndType(name, type);
     }
+
     public List<Facility> findAllWithGeoCoordinates() {
         return facilityRepository.findAllWithGeoCoordinates();
     }
+
     public Optional<Facility> findByIdWithReviews(Long id) {
         return facilityRepository.findByIdWithReviews(id);
     }
-
 }
-
