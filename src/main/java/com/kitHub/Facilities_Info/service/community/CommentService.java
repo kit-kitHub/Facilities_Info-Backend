@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.service.community;
 
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.User;
 import com.kitHub.Facilities_info.domain.community.Comment;
 import com.kitHub.Facilities_info.domain.community.Post;
 import com.kitHub.Facilities_info.dto.community.CreateCommentRequest;

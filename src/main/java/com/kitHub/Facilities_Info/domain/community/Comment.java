@@ -2,7 +2,7 @@ package com.kitHub.Facilities_info.domain.community;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,13 +1,17 @@
 package com.kitHub.Facilities_info.util.Authentication.tokenAuthentication;
 
-import com.kitHub.Facilities_info.domain.token.RefreshToken;
-import com.kitHub.Facilities_info.repository.token.RefreshTokenRepository;
+import com.kitHub.Facilities_info.domain.RefreshToken;
+import com.kitHub.Facilities_info.repository.RefreshTokenRepository;
+
+import com.kitHub.Facilities_info.repository.UserRepository;
 import com.kitHub.Facilities_info.util.jwt.JwtProperties;
 import com.kitHub.Facilities_info.util.jwt.JwtProvider;
+
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
 
 import java.util.Optional;
 
@@ -17,16 +21,18 @@ public class TokenAuthenticationManager {
     private final JwtProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtProperties jwtProperties;
-
+    private final UserRepository userRepository;
     private final static String HEADER_AUTHORIZATION = "Authorization";
     private final static String ACCESS_TOKEN_PREFIX = "accesstoken ";
+
 
     public String getRefreshTokenFrom(String accessToken) {
         Long userId = tokenProvider.getUserId(accessToken);
         Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUserId(userId);
         if (!refreshToken.isPresent()) {
             return null;
-        } else {
+        }
+        else {
             return refreshToken.get().getRefreshToken();
         }
     }
@@ -38,8 +44,9 @@ public class TokenAuthenticationManager {
             throw new TokenValidationException(result, "Token validation failed with reason: " + result);
         }
         // 검증 성공 시 파싱된 클레임 객체를 반환합니다.
-        return getClaimsParsedToken(token);
+        return getParsedToken(token);
     }
+
 
     public TokenValidationResult validateToken(String token) {
         if (token == null || token.isEmpty()) {
@@ -64,7 +71,7 @@ public class TokenAuthenticationManager {
         }
     }
 
-    public Claims getClaimsParsedToken(String token) throws TokenValidationException {
+    public Claims getParsedToken(String token) throws TokenValidationException {
         try {
             return Jwts.parser()
                     .setSigningKey(jwtProperties.getSecretKey())
@@ -83,7 +90,6 @@ public class TokenAuthenticationManager {
         }
     }
 
-    public void clearAuthenticate() {
-        SecurityContextHolder.clearContext();
-    }
+
+    public void clearAuthenticate() { SecurityContextHolder.clearContext(); }
 }

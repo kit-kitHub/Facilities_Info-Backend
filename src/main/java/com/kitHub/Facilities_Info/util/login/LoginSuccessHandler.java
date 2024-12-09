@@ -1,8 +1,8 @@
 package com.kitHub.Facilities_info.util.login;
 
-import com.kitHub.Facilities_info.domain.token.RefreshToken;
-import com.kitHub.Facilities_info.domain.auth.User;
-import com.kitHub.Facilities_info.repository.token.RefreshTokenRepository;
+import com.kitHub.Facilities_info.domain.RefreshToken;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.repository.RefreshTokenRepository;
 import com.kitHub.Facilities_info.repository.UserRepository;
 
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;

@@ -16,29 +16,27 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="6b6e03c5-8f7b-4010-aa74-c9121f0184c9">
-      <console name="kitHub-Backend-DB" type="STANDARD" schema="facility_db" session="Main"><![CDATA[use facility_db;
+    <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a">
+      <console name="Connection" type="STANDARD" schema="facility_db" session="Main"><![CDATA[USE facility_db
+SELECT * FROM facilities
 
-SHOW tables;
+SELECT f FROM Facility f LEFT JOIN FETCH f.reviews WHERE f.id = 1
 
-SELECT * FROM email_verification_tokens;
+SELECT * FROM users
 
-DROP TABLE email_verification_tokens;
+SELECT * FROM refresh_tokens
 
-FLUSH TABLES;
+DROP TABLE refresh_tokens
 
-CREATE TABLE email_verification_tokens (
+DROP TABLE refersh_tokens
+
+CREATE TABLE refresh_tokens (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    token VARCHAR(512) NOT NULL,
-    expiry_date DATETIME NOT NULL,
-    is_verified BOOLEAN NOT NULL
+    user_id BIGINT NOT NULL UNIQUE,
+    refresh_token VARCHAR(512) NOT NULL
 );
 
-DESCRIBE notices;]]></console>
-    </connection>
-    <connection id="8e10b9f1-916d-4f9c-af32-758fe00275a2">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[use facility_db;]]></console>
+SHOW TABLES]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -48,8 +46,7 @@ DESCRIBE notices;]]></console>
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="6b6e03c5-8f7b-4010-aa74-c9121f0184c9" />
-    <connection id="8e10b9f1-916d-4f9c-af32-758fe00275a2" />
+    <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="dd83b0d8-9d66-44bf-8530-834447b7713a" dataset="facility_db.refresh_tokens" active-filter-id="" />
@@ -78,101 +75,7 @@ DESCRIBE notices;]]></console>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="6b6e03c5-8f7b-4010-aa74-c9121f0184c9" active="true" signed="true">
-        <database>
-          <name value="kitHub-Backend-DB" />
-          <description value="" />
-          <database-type value="MYSQL" />
-          <config-type value="BASIC" />
-          <database-version value="8.0" />
-          <driver-source value="BUNDLED" />
-          <driver-library value="" />
-          <driver value="" />
-          <url-type value="DATABASE" />
-          <host value="3.34.105.70" />
-          <port value="3306" />
-          <database value="facility_db" />
-          <tns-folder value="" />
-          <tns-profile value="" />
-          <type value="USER_PASSWORD" />
-          <user value="root" />
-          <deprecated-pwd value="a2l0aHVi" />
-        </database>
-        <properties>
-          <auto-commit value="false" />
-        </properties>
-        <ssh-settings>
-          <active value="false" />
-          <proxy-host value="" />
-          <proxy-port value="22" />
-          <proxy-user value="" />
-          <deprecated-proxy-pwd value="" />
-          <auth-type value="PASSWORD" />
-          <key-file value="" />
-          <key-passphrase value="" />
-        </ssh-settings>
-        <ssl-settings>
-          <active value="false" />
-          <certificate-authority-file value="" />
-          <client-certificate-file value="" />
-          <client-key-file value="" />
-        </ssl-settings>
-        <details>
-          <charset value="UTF-8" />
-          <session-management value="true" />
-          <ddl-file-binding value="true" />
-          <database-logging value="true" />
-          <connect-automatically value="true" />
-          <restore-workspace value="true" />
-          <restore-workspace-deep value="false" />
-          <environment-type value="default" />
-          <connectivity-timeout value="30" />
-          <idle-time-to-disconnect value="30" />
-          <idle-time-to-disconnect-pool value="5" />
-          <credential-expiry-time value="10" />
-          <max-connection-pool-size value="7" />
-          <alternative-statement-delimiter value="" />
-        </details>
-        <debugger>
-          <compile-dependencies value="true" />
-          <tcp-driver-tunneling value="false" />
-          <tcp-host-address value="" />
-          <tcp-port-from value="4000" />
-          <tcp-port-to value="4999" />
-          <debugger-type value="ASK" />
-        </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
-          <object-filters />
-          <object-type-filter use-master-settings="true">
-            <object-type name="SCHEMA" enabled="true" />
-            <object-type name="USER" enabled="true" />
-            <object-type name="ROLE" enabled="true" />
-            <object-type name="PRIVILEGE" enabled="true" />
-            <object-type name="CHARSET" enabled="true" />
-            <object-type name="TABLE" enabled="true" />
-            <object-type name="VIEW" enabled="true" />
-            <object-type name="MATERIALIZED_VIEW" enabled="true" />
-            <object-type name="NESTED_TABLE" enabled="true" />
-            <object-type name="COLUMN" enabled="true" />
-            <object-type name="INDEX" enabled="true" />
-            <object-type name="CONSTRAINT" enabled="true" />
-            <object-type name="DATASET_TRIGGER" enabled="true" />
-            <object-type name="DATABASE_TRIGGER" enabled="true" />
-            <object-type name="SYNONYM" enabled="true" />
-            <object-type name="SEQUENCE" enabled="true" />
-            <object-type name="PROCEDURE" enabled="true" />
-            <object-type name="FUNCTION" enabled="true" />
-            <object-type name="PACKAGE" enabled="true" />
-            <object-type name="TYPE" enabled="true" />
-            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
-            <object-type name="ARGUMENT" enabled="true" />
-            <object-type name="DIMENSION" enabled="true" />
-            <object-type name="CLUSTER" enabled="true" />
-            <object-type name="DBLINK" enabled="true" />
-          </object-type-filter>
-        </object-filters>
-      </connection>
-      <connection id="8e10b9f1-916d-4f9c-af32-758fe00275a2" active="true" signed="true">
+      <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
