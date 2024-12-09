@@ -75,25 +75,6 @@ jobs:
             issuer: Facilities-map-service
             secret_key: ${{ secrets.JWT_SECRET_KEY }}
 
-          security:
-            basic:
-              enabled: false
-
-          server:
-            port: 8080
-            error:
-              whitelabel:
-                enabled: false
-
-          logging:
-            level:
-              root: INFO
-              org.springframework: DEBUG
-              com.example: DEBUG
-
-          spring:
-            profiles:
-              active: dev
           EOF
         
       - name: 프로젝트 빌드
