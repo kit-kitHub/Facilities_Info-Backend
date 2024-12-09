@@ -28,6 +28,71 @@ jobs:
       - name: gradlew에 실행 권한 부여
         run: chmod +x ./gradlew
 
+      - name: 🔐 application.yml 파일 생성
+        run: |
+          cat <<EOF > src/main/resources/application.yml
+          spring:
+            sql:
+              init:
+                encoding: utf-8
+                
+            http:
+              encoding:
+                charset: UTF-8
+                enabled: true
+                force: true
+
+            datasource:
+              url: ${{ secrets.DB_URL }}
+              username: ${{ secrets.DB_USERNAME }}
+              password: ${{ secrets.DB_PASSWORD }}
+
+            jpa:
+              database-platform: org.hibernate.dialect.MySQL57Dialect
+              hibernate:
+                ddl-auto: update
+              show-sql: true
+
+            servlet:
+              multipart:
+                max-file-size: 10MB
+                max-request-size: 20MB
+
+            mail:
+              host: smtp.gmail.com
+              port: 587
+              username: ${{ secrets.MAIL_USERNAME }}
+              password: ${{ secrets.MAIL_PASSWORD }}
+              properties:
+                mail.smtp.auth: true
+                mail.smtp.starttls.enable: true
+                mail.smtp.starttls.required: true
+
+          jwt:
+            issuer: Facilities-map-service
+            secret_key: ${{ secrets.JWT_SECRET_KEY }}
+
+          security:
+            basic:
+              enabled: false
+
+          server:
+            port: 8080
+            error:
+              whitelabel:
+                enabled: false
+
+          logging:
+            level:
+              root: INFO
+              org.springframework: DEBUG
+              com.example: DEBUG
+
+          spring:
+            profiles:
+              active: dev
+          EOF
+
       - name: Cache Gradle packages 
         uses: actions/cache@v3
         with:
