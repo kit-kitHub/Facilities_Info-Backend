@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,6 +87,17 @@ public class ImageService {
 
         return imageFileNames;
     }
+    public byte[] getImage(String category, String fileName) throws IOException {
+        try {
+            String imagePath = Paths.get("src/main/resources/static/images/" + category + "/" + fileName).toAbsolutePath().toString();
+            return Files.readAllBytes(Paths.get(imagePath));
+        } catch (IOException e) {
+            // 예외가 발생하면 로그를 출력하고, 사용자에게 적절한 메시지를 반환
+            System.err.println("Error reading image file: " + e.getMessage());
+            throw new IOException("Could not read image file: " + fileName, e);
+        }
+    }
+
 }
 
 

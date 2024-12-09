@@ -1,6 +1,5 @@
 package com.kitHub.Facilities_info.domain.article;
 
-
 import com.kitHub.Facilities_info.domain.image.FAQImage;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -26,8 +25,8 @@ public class FAQ {
     private String title;
 
     @Lob
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "content", columnDefinition = "LONGTEXT", nullable = false)
+    private String content;  // HTML content
 
     @Column(name = "author", nullable = false)
     private String author;
