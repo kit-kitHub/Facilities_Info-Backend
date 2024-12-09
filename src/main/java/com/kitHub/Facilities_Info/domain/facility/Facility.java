@@ -1,6 +1,5 @@
 package com.kitHub.Facilities_info.domain.facility;
 
-import com.kitHub.Facilities_info.domain.UserReview;
 import com.kitHub.Facilities_info.domain.image.FacilityImage;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,9 +24,9 @@ public class Facility {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "geo_coordinates_id", referencedColumnName = "id")
+    @JoinColumn(name = "facility_geo_coordinates_id", referencedColumnName = "id")
     @JsonBackReference
-    private GeoCoordinates geoCoordinates;
+    private FacilityGeoCoordinates facilityGeoCoordinates;
 
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -35,9 +34,13 @@ public class Facility {
 
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    private Set<DetailedLocation> detailedLocations = new HashSet<>();
+
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<FacilityImage> facilityImages = new HashSet<>();
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -54,15 +57,16 @@ public class Facility {
     private FacilityType type;
 
     @Builder
-    public Facility(String name, String address, String description, double rating, GeoCoordinates geoCoordinates, Set<UserReview> reviews, Set<FacilityImage> facilityImages, FacilityType type) {
+    public Facility(String name, String address, String description, double rating, FacilityGeoCoordinates facilityGeoCoordinates, Set<UserReview> reviews, Set<FacilityImage> facilityImages, FacilityType type) {
         this.name = name;
         this.address = address;
         this.description = description;
         this.rating = rating;
-        this.geoCoordinates = geoCoordinates;
+        this.facilityGeoCoordinates = facilityGeoCoordinates;
         this.reviews = reviews != null ? reviews : new HashSet<>();
         this.facilityImages = facilityImages != null ? facilityImages : new HashSet<>();
         this.type = type;
+        this.detailedLocations = new HashSet<>();
     }
 
     public Facility updateUserReview(UserReview userReview) {
@@ -85,18 +89,16 @@ public class Facility {
         this.address = (address != null && !address.isEmpty()) ? address : this.address;
         this.description = (description != null && !description.isEmpty()) ? description : this.description;
         if (facilityImages != null && !facilityImages.isEmpty()) {
-            this.facilityImages.clear(); // 기존 이미지 제거
-            this.facilityImages.addAll(facilityImages); // 새로운 이미지 추가
+            replaceFacilityImages(facilityImages);
         }
         return this;
     }
 
-    public void replaceFacilityImages(Set<FacilityImage> facilityImages) {
+    private void replaceFacilityImages(Set<FacilityImage> facilityImages) {
         this.facilityImages.clear(); // 기존 이미지 제거
         this.facilityImages.addAll(facilityImages); // 새로운 이미지 추가
         facilityImages.forEach(image -> image.setFacility(this));
     }
-
 
     public void removeFacilityImage(FacilityImage facilityImage) {
         this.facilityImages.remove(facilityImage);
