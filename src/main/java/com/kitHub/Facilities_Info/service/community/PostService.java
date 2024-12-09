@@ -1,10 +1,9 @@
 package com.kitHub.Facilities_info.service.community;
 
-import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.domain.auth.User;
 import com.kitHub.Facilities_info.domain.community.Post;
 import com.kitHub.Facilities_info.dto.community.CreatePostRequest;
 import com.kitHub.Facilities_info.dto.community.UpdatePostRequest;
-import com.kitHub.Facilities_info.repository.UserRepository;
 import com.kitHub.Facilities_info.repository.community.PostRepository;
 import com.kitHub.Facilities_info.service.UserService;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;

@@ -1,8 +1,8 @@
 package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.domain.auth.User;
 
-import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.domain.facility.UserReview;
 import com.kitHub.Facilities_info.dto.auth.AddLocalUserRequest;
 import com.kitHub.Facilities_info.dto.auth.AddOauthUserRequest;
 import com.kitHub.Facilities_info.repository.UserRepository;

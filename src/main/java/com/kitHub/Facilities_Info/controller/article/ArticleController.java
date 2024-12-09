@@ -4,7 +4,7 @@ import com.kitHub.Facilities_info.domain.article.FAQ;
 import com.kitHub.Facilities_info.domain.article.Notice;
 import com.kitHub.Facilities_info.dto.article.AddArticleRequest;
 import com.kitHub.Facilities_info.dto.article.ArticleTitleResponse;
-import com.kitHub.Facilities_info.service.ArticleService;
+import com.kitHub.Facilities_info.service.community.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

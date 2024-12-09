@@ -17,26 +17,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a">
-      <console name="Connection" type="STANDARD" schema="facility_db" session="Main"><![CDATA[USE facility_db
-SELECT * FROM facilities
-
-SELECT f FROM Facility f LEFT JOIN FETCH f.reviews WHERE f.id = 1
-
-SELECT * FROM users
-
-SELECT * FROM refresh_tokens
-
-DROP TABLE refresh_tokens
-
-DROP TABLE refersh_tokens
-
-CREATE TABLE refresh_tokens (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL UNIQUE,
-    refresh_token VARCHAR(512) NOT NULL
-);
-
-SHOW TABLES]]></console>
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
