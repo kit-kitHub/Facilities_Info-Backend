@@ -1,7 +1,7 @@
 package com.kitHub.Facilities_info.config;
 
-import com.kitHub.Facilities_info.domain.auth.User;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
+
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenValidationResult;
 import com.kitHub.Facilities_info.util.jwt.JwtProvider;
@@ -32,26 +32,28 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         logRequestDetails(request);
 
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
+        System.out.println("authorizationHeader=" + authorizationHeader);
         String token = getAccessToken(authorizationHeader);
+        System.out.println("Access token=" + token);
 
         if (token != null) {
+            System.out.println("token=" + token);
             TokenValidationResult tokenValidationResult = tokenAuthenticationManager.validateToken(token);
 
             if (tokenValidationResult == TokenValidationResult.VALID) {
                 Authentication authentication = tokenProvider.getAuthentication(token);
-                User user = (User) authentication.getPrincipal();
-
-                if (user instanceof User && ((User) user).isBlocked()) {// 차단된 유저를 로그아웃 컨트롤러로 리다이렉트
-                    response.sendRedirect("/api/auth/logout");
-                    return;
-                }
-
                 authenticationProvider.setAuthenticationtoSecurityContextHolder(authentication);
             } else {
-                System.out.println("tokenValidationResult = " + tokenValidationResult);
-                //handleTokenValidationFailure(tokenValidationResult, response);
-
+                handleTokenValidationFailure(tokenValidationResult, response);
+                System.out.println(tokenValidationResult);
+                return;
             }
+        }
+        else {
+            System.out.println("token MISSING");
+
+//            handleTokenValidationFailure(TokenValidationResult.MISSING, response);
+//            return;
         }
 
         filterChain.doFilter(request, response);
@@ -63,9 +65,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         switch (tokenValidationResult) {
             case MISSING:
+                //response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Token is missing\"}");
+                //break;
             case INVALID:
-//                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Invalid token\"}");
-//                break;
+                //response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Invalid token\"}");
+                //break;
             case MALFORMED:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Malformed token\"}");
                 break;
@@ -73,8 +77,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "{\"error\": \"Unsupported token\"}");
                 break;
             case EXPIRED:
-//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\"error\": \"Token expired\"}");
-//                break;
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\"error\": \"Token expired\"}");
+                break;
             case SIGNATURE_INVALID:
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\"error\": \"Invalid token signature\"}");
                 break;
@@ -84,20 +88,26 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
+
+
     private String getAccessToken(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith(ACCESS_TOKEN_PREFIX)) {
             return authorizationHeader.substring(ACCESS_TOKEN_PREFIX.length());
         }
+
         return null;
     }
 
-    private void logRequestDetails(HttpServletRequest request) throws IOException {
+    private void logRequestDetails(HttpServletRequest request) {
         System.out.println("Request Method: " + request.getMethod());
         System.out.println("Request URI: " + request.getRequestURI());
         System.out.println("Request Headers:");
         request.getHeaderNames().asIterator().forEachRemaining(headerName ->
                 System.out.println(headerName + ": " + request.getHeader(headerName))
         );
-
+        // 필요한 경우, 추가 정보를 출력할 수 있습니다.
     }
+
+
 }
+

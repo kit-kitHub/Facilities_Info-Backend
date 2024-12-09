@@ -2,7 +2,10 @@ package com.kitHub.Facilities_info.service;
 
 import com.kitHub.Facilities_info.domain.Report.Block;
 import com.kitHub.Facilities_info.domain.Report.Report;
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.User;
+import com.kitHub.Facilities_info.domain.UserReview;
+import com.kitHub.Facilities_info.domain.community.Comment;
+import com.kitHub.Facilities_info.domain.community.Post;
 import com.kitHub.Facilities_info.repository.BlockRepository;
 import com.kitHub.Facilities_info.repository.ReportRepository;
 import com.kitHub.Facilities_info.repository.UserRepository;

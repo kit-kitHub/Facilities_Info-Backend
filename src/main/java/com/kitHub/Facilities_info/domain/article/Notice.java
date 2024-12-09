@@ -27,7 +27,7 @@ public class Notice {
     private String title;
 
     @Lob
-    @Column(name = "content", columnDefinition = "LONGTEXT", nullable = false)
+    @Column(name = "content", nullable = false)
     private String content;  // HTML content
 
     @Column(name = "author", nullable = false)

@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.util.Authentication.loginAuthentication;
 
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.User;
 import com.kitHub.Facilities_info.repository.UserRepository;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import lombok.RequiredArgsConstructor;

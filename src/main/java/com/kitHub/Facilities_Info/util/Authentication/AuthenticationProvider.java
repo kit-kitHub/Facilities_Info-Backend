@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.util.Authentication;
 
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.User;
 import com.kitHub.Facilities_info.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,16 +72,14 @@ public class AuthenticationProvider {
     }
 
     public Authentication createUsernamePasswordAuthenticationTokenFrom(User user) {
-        String email = user.getEmail();
-
-        // 이메일이 "admin" 또는 "admin1"부터 "admin15"까지의 패턴인지 확인
-        if (email.matches("^admin(1[0-5]|[1-9]?)$")) {
+        if (user.getEmail().equals("admin")){
             return new UsernamePasswordAuthenticationToken(
                     user,
                     null,
                     Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
             );
-        } else {
+        }
+        else{
             return new UsernamePasswordAuthenticationToken(
                     user,
                     null,
@@ -89,7 +87,6 @@ public class AuthenticationProvider {
             );
         }
     }
-
 
     // AnonymousAuthenticationToken 생성
     public Authentication createAnonymousAuthenticationTokenFrom() {
