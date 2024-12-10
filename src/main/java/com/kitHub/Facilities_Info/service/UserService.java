@@ -1,7 +1,6 @@
 package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_info.domain.auth.User;
-
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.domain.facility.UserReview;
 import com.kitHub.Facilities_info.dto.auth.AddLocalUserRequest;
 import com.kitHub.Facilities_info.dto.auth.AddOauthUserRequest;
@@ -19,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     @Autowired
     private AuthenticationProvider authenticationProvider;
+
     public Long saveLocal(AddLocalUserRequest dto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -46,20 +46,19 @@ public class UserService {
                 .build()).getId();
     }
 
-
     public User findById(Long userId) {
         return userRepository.findById(userId)
-               .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+                .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
     }
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
-               .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+                .orElseThrow(() -> new IllegalArgumentException("User with email " + email + " not found"));
     }
 
     public User findBySnsId(String snsId) {
         return userRepository.findBySnsId(snsId)
-               .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+                .orElseThrow(() -> new IllegalArgumentException("User with snsId " + snsId + " not found"));
     }
 
     public User updateNickname(Long userId, String nickname) {
@@ -68,13 +67,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUserReview (User user, UserReview userReview) {
+    public User updateUserReview(User user, UserReview userReview) {
         user.updateUserReview(userReview);
         return userRepository.save(user);
     }
-    public User getUserInfoIfMatchesAuthor(Long AuthorUserId){
-         User LoginUser = authenticationProvider.getUserInfoFromSecurityContextHolder();
-         return LoginUser.getId().equals(AuthorUserId)? LoginUser : null;
+
+    public User getUserInfoIfMatchesAuthor(Long AuthorUserId) {
+        User loginUser = authenticationProvider.getUserInfoFromSecurityContextHolder();
+        return loginUser.getId().equals(AuthorUserId) ? loginUser : null;
     }
 
     public boolean checkEmailExists(String email) {
@@ -88,6 +88,4 @@ public class UserService {
         System.out.println("Nickname check for '" + nickname + "': " + exists);
         return exists;
     }
-
 }
-

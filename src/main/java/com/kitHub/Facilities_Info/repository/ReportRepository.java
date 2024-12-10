@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.repository;
 
-import com.kitHub.Facilities_info.domain.Report.Report;
+import com.kitHub.Facilities_info.domain.user.Report.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

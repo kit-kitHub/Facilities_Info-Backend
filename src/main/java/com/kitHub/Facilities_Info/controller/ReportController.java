@@ -1,13 +1,11 @@
 package com.kitHub.Facilities_info.controller;
 
-import com.kitHub.Facilities_info.domain.Report.Report;
+import com.kitHub.Facilities_info.domain.user.Report.Report;
 import com.kitHub.Facilities_info.dto.CreateReportRequest;
 import com.kitHub.Facilities_info.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/reports")

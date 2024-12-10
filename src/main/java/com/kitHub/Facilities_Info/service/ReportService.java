@@ -1,8 +1,8 @@
 package com.kitHub.Facilities_info.service;
 
-import com.kitHub.Facilities_info.domain.Report.Block;
-import com.kitHub.Facilities_info.domain.Report.Report;
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.user.Report.Block;
+import com.kitHub.Facilities_info.domain.user.Report.Report;
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.domain.facility.UserReview;
 import com.kitHub.Facilities_info.domain.community.Comment;
 import com.kitHub.Facilities_info.domain.community.Post;

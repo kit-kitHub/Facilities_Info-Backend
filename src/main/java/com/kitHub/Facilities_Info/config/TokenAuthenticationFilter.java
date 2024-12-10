@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.config;
 
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenValidationResult;
