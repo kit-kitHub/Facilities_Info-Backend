@@ -8,8 +8,10 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -46,7 +48,8 @@ public class EmailVerificationService {
 
         // 이메일 전송
         String verificationUrl = "http://3.34.105.70:8080/api/verifyEmail/" + token;
-        String message = """<!DOCTYPE html>
+        String message = String.format("""
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -60,7 +63,7 @@ public class EmailVerificationService {
     </div>
     <div style="text-align: center;">
         <p>아래 버튼을 클릭하여 이메일 주소를 인증해 주세요</p>
-        <a href="{verificationUrl}" style="display: inline-block; padding: 10px 20px; margin-top: 20px; color: #ffffff; background-color: #28a745; text-decoration: none; border-radius: 5px; font-weight: bold;">이메일 인증</a>
+        <a href="%s" style="display: inline-block; padding: 10px 20px; margin-top: 20px; color: #ffffff; background-color: #28a745; text-decoration: none; border-radius: 5px; font-weight: bold;">이메일 인증</a>
     </div>
     <div style="text-align: center; padding-top: 20px; font-size: 12px; color: #aaaaaa;">
         <p>이 이메일을 요청하지 않으셨다면, 무시해 주세요.</p>
@@ -68,8 +71,7 @@ public class EmailVerificationService {
 </div>
 </body>
 </html>
-        """;
-        message = message.replace("{verificationUrl}", verificationUrl);
+        """, verificationUrl);
 
         MimeMessage emailMessage = mailSender.createMimeMessage();
         try {
