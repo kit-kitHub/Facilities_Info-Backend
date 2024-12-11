@@ -16,18 +16,115 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    <connection id="81ba9031-ef40-4b1e-b4fd-9fe509e08c6b">
+      <console name="Faclility_project" type="STANDARD" schema="" session="Main"><![CDATA[use facility_db;
+
+-- FacilityGeoCoordinates 테이블 생성
+CREATE TABLE facility_geo_coordinates (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL
+);
+
+-- Facility 테이블 생성
+CREATE TABLE facilities (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    rating DOUBLE NOT NULL,
+    facility_geo_coordinates_id BIGINT,
+    type ENUM('PARKING_LOT', 'WELFARE_CENTER', 'MEDICAL_FACILITY', 'RESTROOM') NOT NULL,
+    FOREIGN KEY (facility_geo_coordinates_id) REFERENCES facility_geo_coordinates(id)
+);
+
+-- DetailedLocation 테이블 생성
+CREATE TABLE detailed_locations (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    location VARCHAR(255) NOT NULL,
+    rating DOUBLE NOT NULL,
+    facility_id BIGINT,
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL,
+    FOREIGN KEY (facility_id) REFERENCES facilities(id)
+);
+
+-- FacilityGeoCoordinates 데이터 삽입
+INSERT INTO facility_geo_coordinates (latitude, longitude) VALUES 
+(37.5665, 126.9780), -- 서울
+(35.1796, 129.0756), -- 부산
+(35.8714, 128.6014), -- 대구
+(35.1603, 126.8514), -- 광주
+(36.3504, 127.3845), -- 대전
+(35.5384, 129.3114), -- 울산
+(36.4804, 127.2892), -- 세종
+(37.2752, 127.0097), -- 경기
+(37.4563, 126.7052), -- 인천
+(37.8854, 127.7297), -- 강원
+(36.6425, 127.4890), -- 충북
+(36.5184, 126.8000), -- 충남
+(35.7175, 127.1533), -- 전북
+(34.8160, 126.4629), -- 전남
+(35.8961, 128.6315), -- 경북
+(35.2373, 129.0833), -- 경남
+(33.4996, 126.5312), -- 제주
+(37.5665, 126.9780), -- 서울
+(35.1796, 129.0756), -- 부산
+(35.8714, 128.6014), -- 대구
+(35.1603, 126.8514), -- 광주
+(36.3504, 127.3845), -- 대전
+(35.5384, 129.3114), -- 울산
+(36.4804, 127.2892), -- 세종
+(37.2752, 127.0097), -- 경기
+(37.4563, 126.7052), -- 인천
+(37.8854, 127.7297), -- 강원
+(36.6425, 127.4890), -- 충북
+(36.5184, 126.8000), -- 충남;
+
+-- Facility 데이터 삽입
+INSERT INTO facilities (name, address, description, rating, facility_geo_coordinates_id, type) VALUES 
+('서울 중앙 공원', '서울특별시 종로구', '도심 속에서 자연을 느낄 수 있는 큰 공원', 4.8, 1, 'PARKING_LOT'),
+('부산 시민 공원', '부산광역시 부산진구', '시민들이 즐겨 찾는 큰 공원', 4.7, 2, 'WELFARE_CENTER'),
+('대구 성서 공원', '대구광역시 달서구', '녹지 공간과 다양한 편의 시설을 갖춘 공원', 4.6, 3, 'MEDICAL_FACILITY'),
+('광주 상록 공원', '광주광역시 북구', '가족 단위 방문객이 많은 공원', 4.5, 4, 'RESTROOM'),
+('대전 한밭 공원', '대전광역시 서구', '현대적인 디자인과 시설을 갖춘 공원', 4.4, 5, 'PARKING_LOT'),
+('울산 태화강 공원', '울산광역시 중구', '아름다운 강변을 따라 조성된 공원', 4.3, 6, 'WELFARE_CENTER'),
+('세종 중앙 공원', '세종특별자치시', '세종시 중심에 위치한 대형 공원', 4.2, 7, 'MEDICAL_FACILITY'),
+('경기도 호수 공원', '경기도 고양시', '호수와 다양한 식물원이 있는 공원', 4.1, 8, 'RESTROOM'),
+('인천 송도 센트럴파크', '인천광역시 연수구', '현대적인 시설과 아름다운 경관을 자랑하는 공원', 4.0, 9, 'PARKING_LOT'),
+('강원도 소양강 공원', '강원도 춘천시', '강을 따라 조성된 자연 친화적인 공원', 3.9, 10, 'WELFARE_CENTER'),
+('충청북도 청남대 공원', '충청북도 청주시', '대규모 녹지 공간과 역사적 의미가 있는 공원', 3.8, 11, 'MEDICAL_FACILITY'),
+('충청남도 태안해안 국립공원', '충청남도 태안군', '바다와 해안선을 따라 조성된 국립공원', 3.7, 12, 'RESTROOM'),
+('전라북도 변산반도 국립공원', '전라북도 부안군', '자연경관이 뛰어난 국립공원', 3.6, 13, 'PARKING_LOT'),
+('전라남도 월출산 국립공원', '전라남도 영암군', '아름다운 산과 계곡을 자랑하는 국립공원', 3.5, 14, 'WELFARE_CENTER'),
+('경상북도 경주 국립공원', '경상북도 경주시', '역사적 유물이 많은 국립공원', 3.4, 15, 'MEDICAL_FACILITY'),
+('경상남도 지리산 국립공원', '경상남도 하동군', '한국의 대표적인 산악 국립공원', 3.3, 16, 'RESTROOM'),
+('제주도 한라산 국립공원', '제주특별자치도', '제주의 중심에 위치한 산악 국립공원', 3.2, 17, 'PARKING_LOT'),
+('서울 남산 공원', '서울특별시 중구', '서울의 중심에서 자연을 느낄 수 있는 공원', 4.8, 18, 'WELFARE_CENTER'),
+('부산 해운대 해수욕장', '부산광역시 해운대구', '한국을 대표하는 해수욕장', 4.7, 19, 'MEDICAL_FACILITY'),
+('대구 달성 공원', '대구광역시 달성군', '넓은 녹지와 다양한 편의 시설을 갖춘 공원', 4.6, 20, 'RESTROOM'),
+('광주 무등산 국립공원', '광주광역시 동구', '광주의 대표적인 산악 국립공원', 4.5, 21, 'PARKING_LOT'),
+('대전 엑스포 과학 공원', '대전광역시 유성구', '과학기술을 주제로 한 대형 공원', 4.4, 22, 'WELFARE_CENTER'),
+('울산 간절곶 해맞이 공원', '울산광역시 울주군', '일출 명소로 유명한 해맞이 공원', 4.3, 23, 'MEDICAL_FACILITY'),
+('세종 아름동 중앙공원', '세종특별자치시', '도심 속에서 자연을 느낄 수 있는 공원', 4.2, 24, 'RESTROOM'),
+('경기도 광교호수공원', '경기도 수원시', '호수와 산책로가 아름다운 공원', 4.1, 25, 'PARKING_LOT'),
+('인천 월미도 공원', '인천광역시 중구', '바다와 접한 공원으로 다양한 볼거리가 있음', 4.0, 26, 'WELFARE_CENTER'),
+('강원도 경포대 해수욕장', '강원도 강릉시', '한국의 대표적인 해수욕장 중 하나', 3.9, 27, 'MEDICAL_FACILITY'),
+('충청북도 속리산 국립공원', '충청북도 보은군', '역사와 자연이 공존하는 국립공원', 3.8, 28, 'RESTROOM'),
+('충청남도 아산 온천', '충청남도 아산시', '치유와 휴식을 위한 온천 시설', 3.7, 29, 'PARKING_LOT'),
+('전라북도 전주 한옥마을', '전라북도 전주시', '전통 한옥을 보존한 마을', 3.6, 30, 'WELFARE_CENTER');]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="81ba9031-ef40-4b1e-b4fd-9fe509e08c6b" object-ref="consoles/Faclility_project" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a" />
+    <connection id="81ba9031-ef40-4b1e-b4fd-9fe509e08c6b" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="dd83b0d8-9d66-44bf-8530-834447b7713a" dataset="facility_db.refresh_tokens" active-filter-id="" />
@@ -56,9 +153,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="dd83b0d8-9d66-44bf-8530-834447b7713a" active="true" signed="true">
+      <connection id="81ba9031-ef40-4b1e-b4fd-9fe509e08c6b" active="true" signed="true">
         <database>
-          <name value="Connection" />
+          <name value="Faclility_project" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -67,14 +164,14 @@
           <driver-library value="" />
           <driver value="" />
           <url-type value="DATABASE" />
-          <host value="localhost" />
+          <host value="3.34.105.70" />
           <port value="3306" />
-          <database value="mysql" />
+          <database value="facility_db" />
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
           <user value="root" />
-          <deprecated-pwd value="bXlzcWw=" />
+          <deprecated-pwd value="a2l0aHVi" />
         </database>
         <properties>
           <auto-commit value="false" />

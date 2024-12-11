@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.config;
 
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenValidationResult;
@@ -41,8 +41,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 Authentication authentication = tokenProvider.getAuthentication(token);
                 User user = (User) authentication.getPrincipal();
 
-                if (user instanceof User && ((User) user).isBlocked()) {// 차단된 유저를 로그아웃 컨트롤러로 리다이렉트
-                    response.sendRedirect("/api/auth/logout");
+                if (user instanceof User && ((User) user).isBlocked()) {
+                    // 차단된 사용자의 경우 로그 남기고 특정 응답 반환
+                    System.out.println("Blocked user detected: " + user.getUsername());
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "User is blocked");
                     return;
                 }
 
@@ -50,7 +52,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             } else {
                 System.out.println("tokenValidationResult = " + tokenValidationResult);
                 //handleTokenValidationFailure(tokenValidationResult, response);
-
             }
         }
 
@@ -98,6 +99,5 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         request.getHeaderNames().asIterator().forEachRemaining(headerName ->
                 System.out.println(headerName + ": " + request.getHeader(headerName))
         );
-
     }
 }

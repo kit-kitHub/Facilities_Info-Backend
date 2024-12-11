@@ -1,7 +1,7 @@
 package com.kitHub.Facilities_info.service.auth;
 
 import com.kitHub.Facilities_info.domain.token.RefreshToken;
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.repository.token.RefreshTokenRepository;
 import com.kitHub.Facilities_info.service.UserService;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;

@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.controller.admin;
 
-import com.kitHub.Facilities_info.domain.Report.Report;
+import com.kitHub.Facilities_info.domain.user.Report.Report;
 import com.kitHub.Facilities_info.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

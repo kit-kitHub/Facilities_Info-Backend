@@ -3,11 +3,9 @@ package com.kitHub.Facilities_info.config;
 import com.kitHub.Facilities_info.util.jwt.JwtProvider;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;
 import com.kitHub.Facilities_info.util.Authentication.tokenAuthentication.TokenAuthenticationManager;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -61,16 +59,6 @@ public class WebSecurityConfig {
 
 
         http.authorizeRequests()
-//                // Comments 관련 설정
-//                .requestMatchers(HttpMethod.POST, "/comments/**").authenticated()
-//                .requestMatchers(HttpMethod.PUT, "/comments/**").authenticated()
-//                .requestMatchers(HttpMethod.DELETE, "/comments/**").authenticated()
-//
-//                // Posts 관련 설정
-//                .requestMatchers(HttpMethod.POST, "/posts/**").authenticated()
-//                .requestMatchers(HttpMethod.PUT, "/posts/**").authenticated()
-//                .requestMatchers(HttpMethod.DELETE, "/posts/**").authenticated()
-//
 //                // Reviews 관련 설정
 //                .requestMatchers(HttpMethod.POST, "/api/review/**").authenticated()
 //                .requestMatchers(HttpMethod.PUT, "/api/review/**").authenticated()

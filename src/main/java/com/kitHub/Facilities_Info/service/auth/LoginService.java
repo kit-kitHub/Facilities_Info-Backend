@@ -1,6 +1,6 @@
 package com.kitHub.Facilities_info.service.auth;
 
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.dto.auth.LocalLoginRequest;
 import com.kitHub.Facilities_info.dto.auth.OAuthLoginRequest;
 import com.kitHub.Facilities_info.util.Authentication.AuthenticationProvider;

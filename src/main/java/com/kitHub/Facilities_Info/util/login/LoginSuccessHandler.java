@@ -1,7 +1,7 @@
 package com.kitHub.Facilities_info.util.login;
 
 import com.kitHub.Facilities_info.domain.token.RefreshToken;
-import com.kitHub.Facilities_info.domain.auth.User;
+import com.kitHub.Facilities_info.domain.user.User;
 import com.kitHub.Facilities_info.repository.token.RefreshTokenRepository;
 import com.kitHub.Facilities_info.repository.UserRepository;
 
@@ -60,6 +60,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 
 
+
     private void saveRefreshToken(Long userId, String newRefreshToken) {
         RefreshToken refreshToken = refreshTokenRepository.findByUserId(userId)
                 .map(entity -> entity.update(newRefreshToken))
@@ -68,3 +69,4 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         refreshTokenRepository.save(refreshToken);
     }
 }
+
