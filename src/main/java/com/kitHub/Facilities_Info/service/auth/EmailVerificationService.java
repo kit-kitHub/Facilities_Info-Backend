@@ -35,7 +35,7 @@ public class EmailVerificationService {
         tokenRepository.save(verificationToken);
 
         // 이메일 전송
-        String verificationUrl = "http://localhost:8080/api/verifyEmail/" + token;
+        String verificationUrl = "http://3.34.105.70:8080/api/verifyEmail/" + token;
         String message = "Click the link to verify your email: " + verificationUrl;
 
         SimpleMailMessage emailMessage = new SimpleMailMessage();
